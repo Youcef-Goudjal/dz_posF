@@ -9,6 +9,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final langManager = LanguageManager.instance;
+    final themeManager = ThemeManager.instance;
     return EasyLocalization(
       // default settings
       supportedLocales: langManager.supportedLocales,
@@ -17,18 +18,20 @@ class App extends StatelessWidget {
       useOnlyLangCode: langManager.useOnlyLangCode,
       saveLocale: langManager.saveLocale,
       startLocale: langManager.startLocale,
-      child: MaterialApp(
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-          colorScheme: ColorScheme.fromSwatch(
-            accentColor: const Color(0xFF13B9FF),
-          ),
-        ),
-        // translations
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        home: const CounterPage(),
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            // localization
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            // Theme
+            themeMode: themeManager.themeMode,
+            theme: themeManager.lightTheme,
+            darkTheme: themeManager.darkTheme,
+            home: const CounterPage(),
+          );
+        },
       ),
     );
   }
