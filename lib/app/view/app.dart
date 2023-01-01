@@ -1,5 +1,4 @@
 import 'package:dz_pos/core/core.dart';
-import 'package:dz_pos/counter/counter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,7 @@ class App extends StatelessWidget {
       startLocale: langManager.startLocale,
       child: Builder(
         builder: (context) {
-          return MaterialApp(
+          return MaterialApp.router(
             // localization
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
@@ -29,7 +28,8 @@ class App extends StatelessWidget {
             themeMode: themeManager.themeMode,
             theme: themeManager.lightTheme,
             darkTheme: themeManager.darkTheme,
-            home: const CounterPage(),
+            // Route
+            routerConfig: AppRouter.router(),
           );
         },
       ),
