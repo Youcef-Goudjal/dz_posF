@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:dz_pos/core/manager/language/language_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 
@@ -28,20 +27,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   Bloc.observer = AppBlocObserver();
-  final langManager = LanguageManager.instance;
   await runZonedGuarded(
     () async => runApp(
-      EasyLocalization(
-        // default settings
-        supportedLocales: langManager.supportedLocales,
-        path: langManager.path,
-        fallbackLocale: langManager.defaultLanguage,
-        useOnlyLangCode: langManager.useOnlyLangCode,
-        saveLocale: langManager.saveLocale,
-        startLocale: langManager.startLocale,
-        //
-        child: await builder(),
-      ),
+      await builder(),
     ),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
